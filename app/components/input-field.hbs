@@ -1,21 +1,32 @@
 <form>
   <div class="form-container">
     <div class="input-fields">
-      <input id="input-amount"
-             placeholder="Enter a number!"
-             type="number"
-      />
-      <select id="select-currency">
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="BTC">BTC</option>
-      </select>
+      <label for="input-amount">
+        <Input id="input-amount"
+               placeholder="Enter a number!"
+               type="text"
+               @value={{this.value}}
+          {{on "input" this.inputValue}}
+        />
+      </label>
+      <label for="select-currency">
+        <select id="select-currency">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="BTC">BTC</option>
+        </select>
+      </label>
     </div>
     <div>
       <button id="button-convert"
               type="submit"
+        {{on "click" this.convert}}
       >Convert
       </button>
+    </div>
+    <div class="result-block">
+      <h2>Conversion result</h2>
+      <p>{{this.value}} = {{this.result}}</p>
     </div>
   </div>
 </form>
