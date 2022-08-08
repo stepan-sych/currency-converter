@@ -10,10 +10,10 @@
         />
       </label>
       <label for="select-currency">
-        <select id="select-currency">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="BTC">BTC</option>
+        <select id="select-currency"  {{on "change" this.selectCurrency}}>
+          {{#each @currencies as |currency|}}
+            <option value={{currency.ccy}} >{{currency.ccy}}</option>
+          {{/each}}
         </select>
       </label>
     </div>
@@ -26,7 +26,9 @@
     </div>
     <div class="result-block">
       <h2>Conversion result</h2>
-      <p>{{this.value}} = {{this.result}}</p>
+      {{#each @currencies as |currency|}}
+        <p>{{this.value}} {{currency.base_ccy}} = {{this.result}} {{currency.ccy}}</p>
+      {{/each}}
     </div>
   </div>
 </form>
