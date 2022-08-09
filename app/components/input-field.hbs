@@ -4,15 +4,15 @@
       <label for="input-amount">
         <Input id="input-amount"
                placeholder="Enter a number!"
-               type="text"
-               @value={{this.value}}
+               @type="text"
+               @value={{this.currentInputValue}}
           {{on "input" this.inputValue}}
         />
       </label>
       <label for="select-currency">
         <select id="select-currency"  {{on "change" this.selectCurrency}}>
           {{#each @currencies as |currency|}}
-            <option value={{currency.ccy}} >{{currency.ccy}}</option>
+            <option value={{currency.ccy}}>{{currency.ccy}}</option>
           {{/each}}
         </select>
       </label>
@@ -26,9 +26,7 @@
     </div>
     <div class="result-block">
       <h2>Conversion result</h2>
-      {{#each @currencies as |currency|}}
-        <p>{{this.value}} {{currency.base_ccy}} = {{this.result}} {{currency.ccy}}</p>
-      {{/each}}
+      <p>{{this.currentInputValue}} {{this.selectValue}}  = {{this.result}} </p>
     </div>
   </div>
 </form>
