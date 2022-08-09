@@ -11,7 +11,8 @@
       </label>
       <label for="select-currency">
         <select id="select-currency"  {{on "change" this.selectCurrency}}>
-          {{#each @currencies as |currency|}}
+          <option value="">Currencies</option>
+          {{#each @currencyRates as |currency|}}
             <option value={{currency.ccy}}>{{currency.ccy}}</option>
           {{/each}}
         </select>
@@ -26,7 +27,11 @@
     </div>
     <div class="result-block">
       <h2>Conversion result</h2>
-      <p>{{this.currentInputValue}} {{this.selectValue}}  = {{this.result}} </p>
+      <p>{{this.result}}</p>
+      <h2>History</h2>
+      {{#each-in this.historyList as |item items|}}
+        <div>{{items}}</div>
+      {{/each-in}}
     </div>
   </div>
 </form>

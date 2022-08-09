@@ -7,7 +7,6 @@ export default class ConverterRoute extends Route {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
         return data
       });
   }

@@ -5,8 +5,9 @@ import { tracked } from "@glimmer/tracking";
 export default class ConverterComponent extends Component {
   @tracked result = "";
   @tracked currentInputValue = "";
-  @tracked selectValue;
-  @tracked responseValue;
+  @tracked selectValue = "";
+  @tracked responseValue = [];
+  @tracked historyList = [];
 
   constructor() {
     super(...arguments);
@@ -16,9 +17,7 @@ export default class ConverterComponent extends Component {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         this.responseValue = data;
-        console.log(this.responseValue[1].buy);
       });
   }
 
@@ -28,10 +27,12 @@ export default class ConverterComponent extends Component {
     console.log(eventClick);
     for (const responseValueElement of this.responseValue) {
       if (responseValueElement.ccy === this.selectValue) {
-        return this.result = this.currentInputValue * responseValueElement.sale + ` ${responseValueElement.base_ccy}`;
+        this.result = ` ${this.currentInputValue} ${this.selectValue} =
+         ${Number(this.currentInputValue * responseValueElement.sale).toFixed(2)} ${responseValueElement.base_ccy} `;
+        this.historyList.unshift(this.result);
+        this.historyList = this.historyList;
       }
     }
-
   }
 
   @action
@@ -45,5 +46,4 @@ export default class ConverterComponent extends Component {
     console.log(eventSelect.target.value);
     this.selectValue = eventSelect.target.value;
   }
-
 }
