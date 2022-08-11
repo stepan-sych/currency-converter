@@ -5,9 +5,10 @@ import { tracked } from "@glimmer/tracking";
 export default class ConverterComponent extends Component {
   @tracked result = "";
   @tracked currentInputValue = "";
-  @tracked selectValue = "";
+  @tracked selectValue = this.responseValue[0].ccy;
   @tracked responseValue = [];
   @tracked historyList = [];
+  @tracked finallyHistoryList = [];
 
   constructor() {
     super(...arguments);
@@ -24,26 +25,23 @@ export default class ConverterComponent extends Component {
   @action
   convert(eventClick) {
     eventClick.preventDefault();
-    console.log(eventClick);
-    for (const responseValueElement of this.responseValue) {
-      if (responseValueElement.ccy === this.selectValue) {
-        this.result = ` ${this.currentInputValue} ${this.selectValue} =
-         ${Number(this.currentInputValue * responseValueElement.sale).toFixed(2)} ${responseValueElement.base_ccy} `;
+    this.responseValue
+      .filter((responseValueElement) => responseValueElement.ccy === this.selectValue)
+      .map((responseValueElement) => {
+        this.result = `${this.currentInputValue} ${responseValueElement.ccy} =
+         ${Number(this.currentInputValue * responseValueElement.sale).toFixed(2)} ${responseValueElement.base_ccy}`;
         this.historyList.unshift(this.result);
-        this.historyList = this.historyList;
-      }
-    }
+        this.finallyHistoryList = this.historyList;
+      });
   }
 
   @action
   inputValue(eventInput) {
-    console.log(eventInput.data);
     this.currentInputValue += eventInput.data.toString().replace(/[^\d.]/g, "");
   }
 
   @action
   selectCurrency(eventSelect) {
-    console.log(eventSelect.target.value);
     this.selectValue = eventSelect.target.value;
   }
 }
