@@ -19,8 +19,11 @@ export default class ConverterComponent extends Component {
       })
       .then((data) => {
         this.responseValue = data;
+      })
+      .catch((error) => {
+        console.error("Error gating currency!", error.message);
       });
-  }
+  };
 
   @action
   convert(eventClick) {
